@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { VideoModal } from "@/components/VideoModal";
 
 interface HeroSlide {
   title: string;
@@ -37,6 +38,7 @@ const heroSlides: HeroSlide[] = [
 export const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -177,7 +179,10 @@ export const HeroSection = () => {
 
         {/* Video Play Button Overlay */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <button className="group relative">
+          <button 
+            onClick={() => setIsVideoModalOpen(true)}
+            className="group relative"
+          >
             <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110 border-2 border-white/30">
               <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
             </div>
@@ -188,6 +193,14 @@ export const HeroSection = () => {
         {/* Bottom Gradient Overlay */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary/40 to-transparent" />
       </div>
+
+      {/* Video Modal */}
+      <VideoModal 
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videoId="jNQXAC9IVRw" // You can change this to any YouTube video ID
+        title="Our Story - Transform Your Future"
+      />
     </section>
   );
 };
